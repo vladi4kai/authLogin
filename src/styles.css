@@ -1,0 +1,6 @@
+body{
+  background: url("img/clouds1.png") repeat;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
