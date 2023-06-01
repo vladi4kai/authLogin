@@ -122,7 +122,14 @@
   />
   <span>Welcome</span>
   <a routerLink="">Home</a>
-  <a *ngIf="isadminuser" routerLink="/user">User</a>
+  <a routerLink="/user">User</a>
+  <mat-menu #trainingsMenu="matMenu">
+    <button mat-menu-item routerLink="/trainings">Training list</button>
+    <button mat-menu-item routerLink="/trainings/group">Training group</button>
+  </mat-menu>
+  <a style="cursor: pointer" [matMenuTriggerFor]="trainingsMenu">
+    Trainings
+  </a>
   <div class="spacer"></div>
   <a routerLink="/login">Logout</a>
 </div>

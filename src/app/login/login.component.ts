@@ -11,34 +11,38 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
   constructor(private builder: FormBuilder, private toastr: ToastrService,
-              private service:AuthService, private router: Router) {
+              private service: AuthService, private router: Router) {
     sessionStorage.clear();
   }
+
   userdata: any;
   loginform = this.builder.group({
-    username:this.builder.control('', Validators.required),
-    password:this.builder.control('', Validators.required)
+    login: this.builder.control('', Validators.required),
+    password: this.builder.control('', Validators.required)
   })
+
   proceedlogin() {
     if (this.loginform.valid) {
-    this.service.GetbyCode(this.loginform.value.username).subscribe(res=> {
-      this.userdata=res;
-      console.log(this.userdata);
-      if (this.userdata.password === this.loginform.value.password){
-        if (this.userdata.isactive){
-          sessionStorage.setItem('username', this.userdata.id);
-          sessionStorage.setItem('userrole', this.userdata.role);
-          this.router.navigate([''])
-
-        } else {
-          this.toastr.error('Please contact admin','No access')
+      this.service.Login(this.loginform.value.login, this.loginform.value.password).subscribe(
+        res => {
+          this.userdata = res;
+          console.log(this.userdata);
+          this.toastr.success('Login success');
+          localStorage.setItem('token', this.userdata.token);
+          console.log(localStorage.getItem('token'));
+          this.router.navigate(['']);
+        },
+        error => {
+          if (error.status === 400) {
+            this.toastr.warning('Invalid password or username');
+          } else {
+            this.toastr.error('Server error');
+          }
         }
-      } else {
-        this.toastr.error('Invalid information')
-      }
-    })
+      );
     } else {
-      this.toastr.warning('Please enter valid data')
+      this.toastr.warning('Please enter valid data');
     }
   }
 }
+

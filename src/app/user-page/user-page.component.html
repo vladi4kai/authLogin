@@ -1,0 +1,57 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{firstName}} {{lastName}}</mat-card-title>
+    <mat-card-subtitle>User ID: {{userId}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <div matLine>
+          Phone:
+          <button mat-button (click)="copyToClipboard(phone)">{{phone}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Date of birth:
+          <button mat-button (click)="copyToClipboard(birth)">{{birth | date: 'dd.MM.yyyy'}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Gender:
+          <button mat-button>{{gender}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Admin:
+          <button mat-button>{{isAdmin}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Telegram ID:
+          <button mat-button (click)="copyToClipboard(tgUserId)">{{tgUserId}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Profile created:
+          <button mat-button (click)="copyToClipboard(createdAt)">{{createdAt | date: 'dd.MM.yyyy'}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Profile updated:
+          <button mat-button (click)="copyToClipboard(updatedAt)">{{updatedAt | date: 'dd.MM.yyyy'}}</button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions style="justify-content: center">
+    <button mat-stroked-button color="primary" (click)="openUpdatePopup()">Update</button>
+    <button mat-button>Back</button>
+  </mat-card-actions>
+</mat-card>

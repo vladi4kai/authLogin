@@ -4,46 +4,79 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatDialog} from "@angular/material/dialog";
-import {UpdatepopupComponent} from "../updatepopup/updatepopup.component";
+import { HttpClient } from '@angular/common/http';
+import {ToastrService} from "ngx-toastr";
+import {ConfirmationdialogComponent} from "../confirmationdialog/confirmationdialog.component";
+import {Router} from "@angular/router";
+import { DatePipe } from '@angular/common';
+
+
+
+
+
 
 
 @Component({
   selector: 'app-userlisting',
   templateUrl: './userlisting.component.html',
-  styleUrls: ['./userlisting.component.css']
+  styleUrls: ['./userlisting.component.css'],
+  providers: [DatePipe]
 })
 export class UserlistingComponent {
-  constructor(private service: AuthService, private dialog: MatDialog) {
+  constructor(private service: AuthService, private dialog: MatDialog,
+              private http: HttpClient,
+             private toastr: ToastrService,
+              private router: Router) {
   this.Loaduser()
   }
+  filterValue: string = '';
   userlist: any;
-  dataSource: any;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
   Loaduser(){
     this.service.GetAll().subscribe(res =>{
       this.userlist = res;
-      this.dataSource = new MatTableDataSource(this.userlist)
+      this.dataSource.data = this.userlist;
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
     })
   }
-  displayedColumns: string[] = ['username', 'name','email','role','status', 'action'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'phone', 'birth', 'action'];
   UpdateUser(code: any){
-   const popup = this.dialog.open(UpdatepopupComponent,{
-      enterAnimationDuration:'500ms',
-      exitAnimationDuration:'500ms',
-      width:'50%',
-      data:{
-        usercode: code
-      }
-    })
-    popup.afterClosed().subscribe(res =>{
-      this.Loaduser()
-    })
+      this.router.navigate(['/users', code, 'edit']);
   }
-  openDialog(){
+  deleteUser(usercode: any) {
+    const dialogRef = this.dialog.open(ConfirmationdialogComponent, {
+      width: '50%',
+      enterAnimationDuration: '500ms',
+      exitAnimationDuration: '500ms',
+      data: {  }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.service.deleteUser(usercode).subscribe(
+          () => {
+            this.toastr.success('User deleted successfully', 'Success');
+            this.Loaduser();
+          },
+          error => {
+            console.error(error);
+            this.toastr.error('Error deleting user', 'Rejected');
+          }
+        );
+      }
+    });
+  }
+
+  navigateToNewUser() {
+    this.router.navigateByUrl('user/new-user');
   }
 }

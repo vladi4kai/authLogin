@@ -1,0 +1,56 @@
+<div class="mat-elevation-z8" style="min-width: 1000px">
+  <mat-card>
+    <mat-form-field appearance="fill">
+      <mat-label>Search</mat-label>
+      <input matInput (input)="applyFilter($event)" placeholder="Search users" [value]="filterValue">
+    </mat-form-field>
+  </mat-card>
+  <table mat-table matSort [dataSource]="dataSource">
+    <!-- Position Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Group Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell  mat-sort-header *matHeaderCellDef> Price </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+    <!-- Weight Column -->
+    <ng-container matColumnDef="maxPeople">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Maximum people </th>
+      <td mat-cell *matCellDef="let element"> {{element.maxPeople}} </td>
+    </ng-container>
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Duration </th>
+      <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+    </ng-container>
+    <ng-container matColumnDef="trainingId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> TrainingID </th>
+      <td mat-cell *matCellDef="let element"> {{element.trainingId}} </td>
+    </ng-container>
+    <ng-container matColumnDef="organizationId">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> OrganizationID </th>
+      <td mat-cell *matCellDef="let element"> {{element.organizationId}} </td>
+    </ng-container>
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action <button (click)="openCreateTrainingGroup()" style="margin-left: 50px" mat-stroked-button color="primary">New +</button></th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="element.role!== 'admin'"   mat-raised-button color="primary" style="margin-right: 20px" [routerLink]="['/trainings/group', element.trainingId]" >More</a>
+        <a *ngIf="element.role!== 'admin'"  mat-raised-button color="warn">Delete</a>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>
+

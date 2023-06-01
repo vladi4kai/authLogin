@@ -5,19 +5,27 @@
   <mat-card-content>
     <form class="example-form" [formGroup]="registerform" (ngSubmit)="updateuser()">
       <mat-form-field style="min-width: 400px">
-        <mat-label>Role</mat-label>
-        <mat-select formControlName="role">
-          <mat-option value="">Select Role</mat-option>
-          <mat-option *ngFor="let item of rolelist" [value]="item.code">
-            {{item.name}}
-          </mat-option>
+        <input matInput formControlName="firstName" placeholder="First Name">
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <input matInput formControlName="lastName" placeholder="Last Name">
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <mat-label >Date of birth</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birth" [readonly]="true">
+        <mat-hint>DATE FORMAT: MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field >
+        <mat-label>Gender</mat-label>
+        <mat-select formControlName="gender">
+          <mat-option value="male">Male</mat-option>
+          <mat-option value="female">Female</mat-option>
         </mat-select>
       </mat-form-field>
-      <div>
-        <mat-checkbox formControlName="isactive" class="example-margin">Activate account</mat-checkbox>
-      </div>
       <div style="min-width: 400px">
-        <button mat-raised-button color="primary">Update</button>
+        <button mat-raised-button color="primary">Confirm</button>
         <a mat-dialog-close="#" style="margin-left: 20px" mat-raised-button color="accent">Back</a>
       </div>
     </form>

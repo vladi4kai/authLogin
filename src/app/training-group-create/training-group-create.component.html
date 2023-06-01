@@ -1,0 +1,35 @@
+<mat-card style="min-width: 400px" *ngIf="currentPage ==='/trainings/group/new'">
+  <mat-card-header>
+    <h1>Create training group</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form" [formGroup]="trainingGroupForm" (ngSubmit)="uploadGroup()">
+      <mat-form-field style="min-width: 400px">
+        <mat-label>Choose training</mat-label>
+        <mat-select formControlName="trainingId" (selectionChange)="updateFormFields()">
+          <mat-option *ngFor="let training of trainings" [value]="training.id">{{ training.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <mat-label>Group name</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <mat-label>Price</mat-label>
+        <input matInput formControlName="price">
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <mat-label>People limit</mat-label>
+        <input type="text" matInput formControlName="maxPeople">
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <mat-label>Duration</mat-label>
+        <input matInput formControlName="duration">
+      </mat-form-field>
+      <div style="min-width: 400px">
+        <button mat-raised-button color="primary">Submit</button>
+        <a style="margin-left: 20px" mat-raised-button color="accent">Cancel</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,22 @@
+<mat-card style="min-width: 400px">
+  <mat-card-header>
+    <h1>Create training</h1>
+  </mat-card-header>
+  <mat-card-content>
+    <form class="example-form" [formGroup]="trainingform" (ngSubmit)="uploadtraining()">
+      <mat-form-field style="min-width: 400px">
+        <input matInput formControlName="name" placeholder="Training name">
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <input matInput formControlName="duration" placeholder="Training duration">
+      </mat-form-field>
+      <mat-form-field style="min-width: 400px">
+        <input matInput formControlName="maxPeople" placeholder="People limit">
+      </mat-form-field>
+      <div style="min-width: 400px">
+        <button mat-raised-button color="primary">Confirm</button>
+        <a mat-dialog-close="#" style="margin-left: 20px" mat-raised-button color="accent">Back</a>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

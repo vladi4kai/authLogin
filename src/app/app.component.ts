@@ -1,4 +1,4 @@
-import { Component, DoCheck} from '@angular/core';
+import { Component, DoCheck, HostListener} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "./service/auth.service";
 
@@ -7,10 +7,20 @@ import {AuthService} from "./service/auth.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements DoCheck{
-  title = 'authLogin';
-  ismenurequired = false
-  isadminuser=false;
+
+
+export class AppComponent implements DoCheck {
+  // @HostListener('window:beforeunload', ['$event'])
+  // beforeUnloadHandler(event: Event) {
+  //   localStorage.removeItem('token');
+  // }
+  //
+  // @HostListener('window:unload', ['$event'])
+  // unloadHandler(event: Event) {
+  //   localStorage.removeItem('token');
+  // }
+   ismenurequired = false
+  // isadminuser=false;
   constructor(private router: Router, private service: AuthService) {
   }
   ngDoCheck() {
@@ -20,10 +30,10 @@ export class AppComponent implements DoCheck{
     } else {
       this.ismenurequired = true;
     }
-    if(this.service.GetUserRole()==='admin'){
-      this.isadminuser=true
-    } else {
-      this.isadminuser=false
-    }
+    // if(this.service.GetUserRole()==='admin'){
+    //   this.isadminuser=true
+    // } else {
+    //   this.isadminuser=false
+    // }
   }
 }

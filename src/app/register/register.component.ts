@@ -14,23 +14,32 @@ export class RegisterComponent {
   private service:AuthService, private router: Router) {
   }
   registerform = this.builder.group({
-    id: this.builder.control('',Validators.compose([Validators.required, Validators.minLength(5)])),
-    name: this.builder.control('', Validators.required),
-    password: this.builder.control('', Validators.compose([Validators.required, Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$')])),
-    email: this.builder.control('',Validators.compose([Validators.required,Validators.email])),
+    firstName: this.builder.control('', Validators.compose([Validators.required, Validators.minLength(3)])),
+    lastName: this.builder.control('', Validators.compose([Validators.required, Validators.minLength(3)])),
     gender: this.builder.control('male'),
-    role: this.builder.control(''),
-    isactive: this.builder.control(false)
+    birth: this.builder.control(''),
+    phone: this.builder.control('', Validators.required),
+    password: this.builder.control('', Validators.compose([Validators.required, Validators.pattern('^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$')])),
   })
 
-  proceedregistation(){
-    if (this.registerform.valid){
-      this.service.ProceedRegister(this.registerform.value).subscribe(res => {
-        this.toastr.success('Please contact admin for more permissions','Register Successfully')
-        this.router.navigate(['login'])
-      })
+  proceedRegistration() {
+    if (this.registerform.valid) {
+      const userData = {
+        firstName: this.registerform.value.firstName,
+        lastName: this.registerform.value.lastName,
+        gender: this.registerform.value.gender,
+        birth: this.registerform.value.birth,
+        phone: this.registerform.value.phone,
+        password: this.registerform.value.password,
+      };
+
+      this.service.registerUser(userData).subscribe(res => {
+        this.toastr.success( 'Register Successfully');
+        this.router.navigate(['login']);
+      });
     } else {
-      this.toastr.warning('Please enter valid data')
+      this.toastr.warning('Please enter valid data');
     }
   }
+
 }
