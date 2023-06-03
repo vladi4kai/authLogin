@@ -31,7 +31,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action <button (click)="navigateToNewUser()"  style="margin-left: 50px" mat-stroked-button color="primary">New +</button></th>
       <td mat-cell *matCellDef="let element">
-        <a *ngIf="element.role!== 'admin'" (click)="UpdateUser(element.id)" mat-raised-button color="primary" style="margin-right: 20px">More</a>
+        <a *ngIf="element.role!== 'admin'" (click)="updateUserForId(element.id)" mat-raised-button color="primary" style="margin-right: 20px">More</a>
         <a *ngIf="element.role!== 'admin'" (click)="deleteUser(element.id)" mat-raised-button color="warn">Delete</a>
       </td>
     </ng-container>

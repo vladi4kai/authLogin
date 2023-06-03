@@ -6,7 +6,7 @@
     <form class="example-form" [formGroup]="trainingGroupForm" (ngSubmit)="uploadGroup()">
       <mat-form-field style="min-width: 400px">
         <mat-label>Choose training</mat-label>
-        <mat-select formControlName="trainingId" (selectionChange)="updateFormFields()">
+        <mat-select formControlName="trainingId" (selectionChange)="updateFormFieldsForSelectedTraining()">
           <mat-option *ngFor="let training of trainings" [value]="training.id">{{ training.name }}</mat-option>
         </mat-select>
       </mat-form-field>

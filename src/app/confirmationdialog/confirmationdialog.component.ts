@@ -10,7 +10,7 @@ export class ConfirmationdialogComponent {
   username: string;
   constructor(
     public dialogRef: MatDialogRef<ConfirmationdialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: string
   ) {
 
   }

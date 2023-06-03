@@ -1,7 +1,7 @@
 <mat-card class="example-card">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>{{firstName}} {{lastName}}</mat-card-title>
+    <mat-card-title>{{user.firstName}} {{user.lastName}}</mat-card-title>
     <mat-card-subtitle>User ID: {{userId}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
@@ -9,43 +9,43 @@
       <mat-list-item>
         <div matLine>
           Phone:
-          <button mat-button (click)="copyToClipboard(phone)">{{phone}}</button>
+          <button mat-button (click)="copyToClipboard(user.phone)">{{user.phone}}</button>
         </div>
       </mat-list-item>
       <mat-list-item>
         <div matLine>
           Date of birth:
-          <button mat-button (click)="copyToClipboard(birth)">{{birth | date: 'dd.MM.yyyy'}}</button>
+          <button mat-button (click)="copyToClipboard(user.birth)">{{user.birth | date: 'dd.MM.yyyy'}}</button>
         </div>
       </mat-list-item>
       <mat-list-item>
         <div matLine>
           Gender:
-          <button mat-button>{{gender}}</button>
+          <button mat-button>{{user.gender}}</button>
         </div>
       </mat-list-item>
       <mat-list-item>
         <div matLine>
           Admin:
-          <button mat-button>{{isAdmin}}</button>
+          <button mat-button>{{user.isAdmin}}</button>
         </div>
       </mat-list-item>
       <mat-list-item>
         <div matLine>
           Telegram ID:
-          <button mat-button (click)="copyToClipboard(tgUserId)">{{tgUserId}}</button>
+          <button mat-button (click)="copyToClipboard(user.tgUserId)">{{user.tgUserId}}</button>
         </div>
       </mat-list-item>
       <mat-list-item>
         <div matLine>
           Profile created:
-          <button mat-button (click)="copyToClipboard(createdAt)">{{createdAt | date: 'dd.MM.yyyy'}}</button>
+          <button mat-button (click)="copyToClipboard(user.createdAt)">{{user.createdAt | date: 'dd.MM.yyyy'}}</button>
         </div>
       </mat-list-item>
       <mat-list-item>
         <div matLine>
           Profile updated:
-          <button mat-button (click)="copyToClipboard(updatedAt)">{{updatedAt | date: 'dd.MM.yyyy'}}</button>
+          <button mat-button (click)="copyToClipboard(user.updatedAt)">{{user.updatedAt | date: 'dd.MM.yyyy'}}</button>
         </div>
       </mat-list-item>
     </mat-list>

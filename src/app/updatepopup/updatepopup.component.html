@@ -3,7 +3,7 @@
     <h1>Update User</h1>
   </mat-card-header>
   <mat-card-content>
-    <form class="example-form" [formGroup]="registerform" (ngSubmit)="updateuser()">
+    <form class="example-form" [formGroup]="updateUserForm" (ngSubmit)="updateUser()">
       <mat-form-field style="min-width: 400px">
         <input matInput formControlName="firstName" placeholder="First Name">
       </mat-form-field>

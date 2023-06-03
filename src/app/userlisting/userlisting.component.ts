@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import {AuthService} from "../service/auth.service";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {UsersService} from "../service/users.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
@@ -10,49 +10,42 @@ import {ConfirmationdialogComponent} from "../confirmationdialog/confirmationdia
 import {Router} from "@angular/router";
 import { DatePipe } from '@angular/common';
 
-
-
-
-
-
-
 @Component({
   selector: 'app-userlisting',
   templateUrl: './userlisting.component.html',
   styleUrls: ['./userlisting.component.css'],
   providers: [DatePipe]
 })
-export class UserlistingComponent {
-  constructor(private service: AuthService, private dialog: MatDialog,
+export class UserlistingComponent implements OnInit{
+  constructor(private userService: UsersService, private dialog: MatDialog,
               private http: HttpClient,
              private toastr: ToastrService,
               private router: Router) {
-  this.Loaduser()
   }
   filterValue: string = '';
-  userlist: any;
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
+  userList: any;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator !: MatPaginator;
   @ViewChild(MatSort) sort !: MatSort;
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
+  applyFilter(search: Event) {
+    const filterValue = (search.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  Loaduser(){
-    this.service.GetAll().subscribe(res =>{
-      this.userlist = res;
-      this.dataSource.data = this.userlist;
+  loadUsers(){
+    this.userService.getAllUsers().subscribe(res =>{
+      this.userList = res;
+      this.dataSource.data = this.userList;
       this.dataSource.paginator = this.paginator
       this.dataSource.sort = this.sort
     })
   }
   displayedColumns: string[] = ['firstName', 'lastName', 'phone', 'birth', 'action'];
-  UpdateUser(code: any){
-      this.router.navigate(['/users', code, 'edit']);
+  updateUserForId(id: string){
+      this.router.navigate(['/users', id, 'edit']);
   }
-  deleteUser(usercode: any) {
+  deleteUser(id: string) {
     const dialogRef = this.dialog.open(ConfirmationdialogComponent, {
       width: '50%',
       enterAnimationDuration: '500ms',
@@ -62,10 +55,10 @@ export class UserlistingComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.service.deleteUser(usercode).subscribe(
+        this.userService.deleteUser(id).subscribe(
           () => {
             this.toastr.success('User deleted successfully', 'Success');
-            this.Loaduser();
+            this.loadUsers();
           },
           error => {
             console.error(error);
@@ -78,5 +71,8 @@ export class UserlistingComponent {
 
   navigateToNewUser() {
     this.router.navigateByUrl('user/new-user');
+  }
+  ngOnInit() {
+    this.loadUsers()
   }
 }
