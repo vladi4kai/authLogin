@@ -52,6 +52,7 @@ export class TrainingListComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe((result) => {
 
+
     });
   }
 }

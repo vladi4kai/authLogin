@@ -16,7 +16,7 @@ export class UsersService {
 
   updateUser(id: string, inputData: object) {
     const url = `${this.userApiUrl}/${id}`
-    return this.http.patch(url, inputData)
+    return this.http.put(url, inputData)
   }
 
   getAllUsers() {

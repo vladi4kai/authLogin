@@ -22,15 +22,20 @@ export class CreateTrainingModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: string,
     private toastr: ToastrService,
     private dialog: MatDialogRef<CreateTrainingModalComponent>,
-  ) { }
+  ) {
+  }
 
-  uploadTraining(): void {
+  uploadTraining() {
     if (this.trainingForm.valid) {
-      const formData = this.trainingForm.value;
+      const formData = {
+        ...this.trainingForm.value,
+        duration: parseInt(this.trainingForm.value.duration),
+        maxPeople: parseInt(this.trainingForm.value.maxPeople),
+      };
 
       this.trainingService.registerTraining(formData).subscribe(
         () => {
-          this.dialog.close();
+          this.dialog.close()
           this.toastr.success('Uploaded successfully');
         },
         (error: any) => {
