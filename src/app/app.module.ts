@@ -3,21 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialModule} from "../material.module";
-import {ReactiveFormsModule} from "@angular/forms";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {ToastrModule} from "ngx-toastr";
+import { MaterialModule } from "../material.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { ToastrModule } from "ngx-toastr";
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { UserlistingComponent } from './userlisting/userlisting.component';
 import { UpdatepopupComponent } from './updatepopup/updatepopup.component';
-import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { ConfirmationdialogComponent } from './confirmationdialog/confirmationdialog.component';
 import { CreatenewuserComponent } from './createnewuser/createnewuser.component';
-import {TokenInterceptor} from "./token.interceptor";
 import { UserPageComponent } from './user-page/user-page.component';
-import {ClipboardModule} from "@angular/cdk/clipboard";
+import { ClipboardModule } from "@angular/cdk/clipboard";
 import { FormsModule } from '@angular/forms';
 import { TrainingListComponent } from './training-list/training-list.component';
 import { CreateTrainingModalComponent } from './create-training-modal/create-training-modal.component';
@@ -25,9 +24,8 @@ import { TrainingGroupComponent } from './training-group/training-group.componen
 import { TrainingGroupCreateComponent } from './training-group-create/training-group-create.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
-
-
+import { TokenInterceptor } from './token.interceptor';
+import { ApiInterceptor } from 'src/app/api.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,7 +41,7 @@ import { environment } from '../environments/environment';
     TrainingListComponent,
     CreateTrainingModalComponent,
     TrainingGroupComponent,
-    TrainingGroupCreateComponent,
+    TrainingGroupCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -61,9 +59,12 @@ import { environment } from '../environments/environment';
       registrationStrategy: 'registerWhenStable:30000'
     }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
-
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true}],
+  providers: [
+    { provide: 'API_URL', useValue: environment.apiUrl },
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
